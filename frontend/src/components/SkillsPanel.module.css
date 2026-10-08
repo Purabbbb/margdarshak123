@@ -1,0 +1,118 @@
+.container { display: flex; flex-direction: column; gap: 16px; }
+
+.statsRow {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.statBox {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.statNum {
+  font-family: var(--font-display);
+  font-size: 1.7rem;
+  font-weight: 800;
+  color: var(--orange);
+  line-height: 1;
+}
+
+.statLbl { font-size: 0.76rem; color: var(--text-muted); }
+
+.methodNote {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  padding: 10px 16px;
+  background: var(--bg-raised);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+}
+
+.badge {
+  display: inline-block;
+  padding: 1px 7px;
+  background: var(--orange);
+  color: #000;
+  border-radius: 100px;
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.filterRow { display: flex; flex-wrap: wrap; gap: 6px; }
+
+.filterBtn {
+  padding: 5px 12px;
+  border-radius: 100px;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  transition: all 0.15s;
+}
+
+.filterBtn:hover { border-color: var(--orange); color: var(--orange); }
+.filterActive { background: var(--orange); color: #000; border-color: var(--orange); }
+
+.categoryCard {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+}
+
+.categoryHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.categoryName {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.categoryCount { font-size: 0.78rem; color: var(--text-muted); }
+
+.skillList { display: flex; flex-wrap: wrap; gap: 7px; }
+
+.skillTag {
+  padding: 5px 12px;
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  font-size: 0.82rem;
+  color: var(--text-primary);
+  font-weight: 500;
+  transition: all 0.15s;
+}
+
+.skillTag:hover {
+  background: var(--orange-dim);
+  border-color: var(--orange-border);
+  color: var(--orange);
+}
+
+.empty {
+  padding: 32px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+}
+
+@media (max-width: 600px) {
+  .statsRow { grid-template-columns: repeat(2, 1fr); }
+}

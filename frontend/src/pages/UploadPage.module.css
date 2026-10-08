@@ -1,0 +1,43 @@
+.page { min-height: 100vh; display: flex; flex-direction: column; background: var(--bg-primary); }
+.compactPage { width: 100%; }
+.header { display: flex; align-items: center; justify-content: space-between; padding: 18px 5vw; border-bottom: 1px solid var(--border); }
+.logoImg { width: auto; height: 42px; object-fit: contain; }
+.headerTag, .heroLabel { color: var(--gold); font-size: .68rem; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; }
+.main { flex: 1; width: min(1120px, 90%); margin: 0 auto; padding: 84px 0 100px; }
+.hero { max-width: 820px; margin-bottom: 60px; }
+.heroLabel { display: block; margin-bottom: 20px; }
+.heroTitle { max-width: 850px; margin-bottom: 22px; font-family: var(--font-display); font-size: clamp(4rem, 9vw, 8rem); line-height: .84; letter-spacing: .03em; text-transform: uppercase; }
+.heroAccent { color: var(--accent-orange); }
+.heroSub { max-width: 580px; color: var(--text-muted); font-size: 1.05rem; line-height: 1.7; }
+.uploadSection { display: grid; grid-template-columns: 1.35fr .65fr; gap: 28px; align-items: stretch; margin-bottom: 100px; }
+.dropzone { min-height: 300px; padding: 38px; display: flex; align-items: center; justify-content: center; border: 1px dashed var(--border); background: var(--bg-card); cursor: pointer; transition: border-color .2s ease, background .2s ease; }
+.dropzone:hover, .dropzoneActive { border-color: var(--accent-orange); background: var(--orange-dim); }
+.dropzoneHasFile { border-style: solid; border-color: var(--accent-orange); }
+.dropzoneContent { text-align: center; }
+.uploadIcon, .fileIcon { width: 56px; height: 56px; margin: 0 auto 18px; display: grid; place-items: center; color: var(--accent-orange); border: 1px solid var(--orange-border); }
+.dropzoneText { font-family: var(--font-display); font-size: 2rem; letter-spacing: .04em; text-transform: uppercase; }
+.dropzoneHint, .fileSize { display: block; margin-top: 8px; color: var(--text-muted); font-size: .82rem; }
+.filePreview { width: 100%; display: grid; grid-template-columns: 56px 1fr auto; align-items: center; gap: 16px; }
+.fileIcon { margin: 0; }
+.fileInfo { min-width: 0; }
+.fileName { display: block; overflow: hidden; color: var(--text-primary); font-weight: 700; text-overflow: ellipsis; white-space: nowrap; }
+.removeFile { padding: 8px 12px; color: var(--text-muted); background: transparent; border: 1px solid var(--border); font-size: .72rem; text-transform: uppercase; }
+.removeFile:hover { color: var(--error); border-color: var(--error); }
+.errorBanner { grid-column: 1 / -1; display: flex; align-items: center; gap: 8px; padding: 13px 16px; color: var(--error); border: 1px solid var(--error-border); background: var(--error-dim); font-size: .86rem; }
+.analyzeBtn { grid-column: 1 / -1; min-height: 56px; padding: 0 18px; display: flex; align-items: center; justify-content: center; gap: 10px; color: var(--bg-primary); background: var(--accent-orange); font-family: var(--font-display); font-size: 1.2rem; letter-spacing: .05em; text-transform: uppercase; transition: transform .2s ease, background .2s ease; }
+.analyzeBtn:hover:not(:disabled) { background: var(--gold); transform: translateY(-2px); }
+.analyzeBtn:disabled { opacity: .36; cursor: not-allowed; }
+.btnSpinner { width: 18px; height: 18px; border: 2px solid rgba(23, 22, 20, .25); border-top-color: var(--bg-primary); border-radius: 50%; animation: spin .7s linear infinite; }
+.progressBar { grid-column: 1 / -1; height: 4px; background: var(--border); }
+.progressFill { height: 100%; background: var(--accent-orange); transition: width 1.6s ease; }
+.pipeline { grid-column: 1 / -1; padding-top: 30px; border-top: 1px solid var(--border); }
+.pipelineTitle { margin-bottom: 22px; font-family: var(--font-display); font-size: 2rem; letter-spacing: .04em; text-transform: uppercase; }
+.pipelineGrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border-top: 1px solid var(--border); border-left: 1px solid var(--border); }
+.pipelineCard { min-height: 140px; padding: 18px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.stepNum { display: block; margin-bottom: 22px; color: var(--accent-orange); font-family: var(--font-display); font-size: 2.7rem; line-height: 1; }
+.stepLabel { font-family: var(--font-display); font-size: 1.1rem; letter-spacing: .04em; text-transform: uppercase; }
+.stepDesc { margin-top: 6px; color: var(--text-muted); font-size: .76rem; line-height: 1.45; }
+.footer { display: flex; justify-content: space-between; gap: 16px; padding: 20px 5vw; border-top: 1px solid var(--border); color: var(--text-muted); font-size: .68rem; letter-spacing: .1em; text-transform: uppercase; }
+.footer span:first-child { color: var(--text-primary); font-family: var(--font-display); font-size: 1.5rem; }
+@media (max-width: 800px) { .main { padding-top: 58px; } .uploadSection { grid-template-columns: 1fr; } .pipelineGrid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 520px) { .main { width: calc(100% - 36px); } .heroTitle { font-size: clamp(3.4rem, 16vw, 5rem); } .dropzone { min-height: 240px; padding: 24px; } .filePreview { grid-template-columns: 48px 1fr; } .removeFile { grid-column: 2; justify-self: start; } .pipelineGrid { grid-template-columns: 1fr; } .footer { flex-direction: column; } }

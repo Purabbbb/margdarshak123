@@ -1,0 +1,19 @@
+fastapi
+uvicorn[standard]
+python-multipart
+pdfminer.six
+spacy
+nltk
+scikit-learn
+numpy
+requests
+python-dotenv
+pydantic
+transformers
+sentence-transformers
+torch --index-url https://download.pytorch.org/whl/cpu
+gdown
+Pillow
+pytesseract
+
+

@@ -1,0 +1,190 @@
+.container { display: flex; flex-direction: column; gap: 16px; }
+
+.priorityBox {
+  padding: 18px 20px;
+  background: var(--bg-card);
+  border: 1px solid var(--orange-border);
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.priorityTitle {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.priorityTags { display: flex; flex-wrap: wrap; gap: 7px; }
+
+.priorityTag {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 11px 5px 6px;
+  background: var(--bg-raised);
+  border-radius: 100px;
+  border: 1px solid var(--border);
+  font-size: 0.82rem;
+  color: var(--text-primary);
+}
+
+.priorityNum {
+  width: 18px;
+  height: 18px;
+  background: var(--orange);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: #000;
+  font-family: var(--font-display);
+}
+
+.roleTabs { display: flex; flex-wrap: wrap; gap: 6px; }
+
+.roleTab {
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  font-size: 0.83rem;
+  transition: all 0.15s;
+}
+
+.roleTab:hover { border-color: var(--orange); color: var(--orange); }
+.roleTabActive { background: var(--orange); color: #000; border-color: var(--orange); font-weight: 600; }
+
+.section {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+}
+
+.sectionTitle {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sectionCount {
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: var(--text-muted);
+  font-family: var(--font-body);
+}
+
+.courseList { display: flex; flex-direction: column; gap: 12px; }
+
+.skillBlock {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.skillBlockHeader {
+  padding: 10px 14px;
+  background: var(--bg-raised);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.skillName {
+  font-weight: 600;
+  font-size: 0.88rem;
+  color: var(--text-primary);
+  text-transform: capitalize;
+}
+
+.priorityBadge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 100px;
+}
+
+.badgeRequired { background: var(--error-dim); color: var(--error); border: 1px solid var(--error-border); }
+.badgePreferred { background: var(--warning-dim); color: var(--warning); border: 1px solid var(--warning-border); }
+
+.courseCards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+}
+
+.courseCard {
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  border-right: 1px solid var(--border);
+  transition: background 0.15s;
+  position: relative;
+  text-decoration: none;
+}
+
+.courseCard:last-child { border-right: none; }
+.courseCard:hover { background: var(--orange-dim); }
+
+.courseTop {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.courseTitle {
+  font-size: 0.84rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  line-height: 1.3;
+  flex: 1;
+}
+
+.freeTag {
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 1px 6px;
+  background: var(--success-dim);
+  color: var(--success);
+  border-radius: 100px;
+  border: 1px solid var(--success-border);
+  white-space: nowrap;
+}
+
+.coursePlatform { font-size: 0.75rem; color: var(--text-muted); }
+
+.courseArrow {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: var(--text-faint);
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.courseCard:hover .courseArrow { opacity: 1; color: var(--orange); }
+
+.empty {
+  padding: 32px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+}

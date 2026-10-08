@@ -1,0 +1,40 @@
+# Python
+backend/venv/
+backend/.venv/
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Environment variables & secrets
+.env
+.env.*
+!.env.example
+backend/.env
+frontend/.env
+frontend/.env.local
+frontend/.env.*.local
+
+# Node & Frontend
+node_modules/
+frontend/node_modules/
+frontend/dist/
+.eslintcache
+*.tsbuildinfo
+
+# OS & IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Custom model artifacts
+backend/chatbot/intent_classifier/model.safetensors
+

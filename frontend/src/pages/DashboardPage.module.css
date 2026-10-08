@@ -1,0 +1,28 @@
+.page { min-height: 100vh; background: var(--bg-primary); color: var(--text-primary); }
+.header { position: sticky; top: 0; z-index: 100; display: flex; align-items: center; gap: 28px; padding: 12px 32px; background: rgba(23, 22, 20, .96); border-bottom: 1px solid var(--border); backdrop-filter: blur(12px); }
+.logo { flex-shrink: 0; }
+.logoImg { width: auto; height: 42px; object-fit: contain; }
+.headerStats { display: flex; align-items: center; justify-content: center; gap: 10px; flex: 1; }
+.statPill, .statPillAccent { display: flex; align-items: baseline; gap: 7px; min-height: 42px; padding: 7px 13px; border: 1px solid var(--border); }
+.statPillAccent { border-color: var(--orange-border); background: var(--orange-dim); }
+.statVal { color: var(--gold); font-family: var(--font-display); font-size: 1.4rem; line-height: 1; }
+.statPillAccent .statVal { color: var(--accent-orange); }
+.statLbl { color: var(--text-muted); font-size: .67rem; letter-spacing: .07em; text-transform: uppercase; }
+.resetBtn { min-height: 38px; padding: 0 14px; color: var(--text-primary); background: transparent; border: 1px solid var(--border); font-size: .68rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+.resetBtn:hover { color: var(--bg-primary); background: var(--accent-orange); border-color: var(--accent-orange); }
+.nameBanner { display: flex; align-items: center; gap: 10px; padding: 14px 32px; color: var(--text-muted); border-bottom: 1px solid var(--orange-border); background: var(--orange-dim); font-size: .8rem; letter-spacing: .04em; }
+.nameBanner strong { color: var(--text-primary); font-family: var(--font-display); font-size: 1.25rem; letter-spacing: .04em; text-transform: uppercase; }
+.location { padding: 4px 8px; color: var(--gold); border: 1px solid var(--warning-border); font-size: .66rem; letter-spacing: .1em; text-transform: uppercase; }
+.tabs { display: flex; align-items: stretch; gap: 0; padding: 0 32px; overflow-x: auto; border-bottom: 1px solid var(--border); background: var(--bg-card); scrollbar-width: none; }
+.tabs::-webkit-scrollbar { display: none; }
+.tab { position: relative; padding: 17px 16px; color: var(--text-muted); background: transparent; border-bottom: 2px solid transparent; white-space: nowrap; font-size: .7rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; transition: color .2s ease, border-color .2s ease; }
+.tab:hover, .tabActive { color: var(--text-primary); }
+.tabActive { border-bottom-color: var(--accent-orange); }
+.tabBadge { margin-left: 5px; padding: 2px 5px; color: var(--bg-primary); background: var(--gold); font-size: .55rem; }
+.content { width: min(1120px, calc(100% - 48px)); min-height: 70vh; margin: 0 auto; padding: 54px 0 100px; animation: fadeIn .3s ease; }
+.contentIntro { margin-bottom: 42px; padding-bottom: 24px; border-bottom: 1px solid var(--border); }
+.contentIntro span { color: var(--gold); font-size: .67rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; }
+.contentIntro h1 { max-width: 760px; margin-top: 15px; font-family: var(--font-display); font-size: clamp(2.5rem, 5vw, 4.8rem); line-height: .9; letter-spacing: .03em; text-transform: uppercase; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 760px) { .header { flex-wrap: wrap; padding: 12px 18px; gap: 12px; } .headerStats { order: 3; width: 100%; justify-content: flex-start; overflow-x: auto; } .tabs { padding: 0 18px; } .tab { padding: 15px 13px; } .nameBanner { padding: 13px 18px; flex-wrap: wrap; } .content { width: calc(100% - 36px); padding-top: 34px; } }
+@media (max-width: 480px) { .statPill, .statPillAccent { min-width: max-content; } .resetBtn { margin-left: auto; } .logoImg { height: 36px; } }

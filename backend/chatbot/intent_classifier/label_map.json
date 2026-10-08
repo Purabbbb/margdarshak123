@@ -1,0 +1,24 @@
+{
+  "labels": [
+    "BEST_ROLE",
+    "COURSES",
+    "GAP",
+    "GREETING",
+    "IMPROVE",
+    "JOBS",
+    "PROFILE",
+    "SALARY",
+    "SKILLS"
+  ],
+  "label2id": {
+    "BEST_ROLE": 0,
+    "COURSES": 1,
+    "GAP": 2,
+    "GREETING": 3,
+    "IMPROVE": 4,
+    "JOBS": 5,
+    "PROFILE": 6,
+    "SALARY": 7,
+    "SKILLS": 8
+  }
+}
