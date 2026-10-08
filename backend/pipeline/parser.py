@@ -21,6 +21,9 @@ Extracts structured fields from the resume using two techniques:
      which is common when resumes lack address formatting.
 """
 
+import re
+import spacy
+
 _nlp = None
 
 def get_nlp():
