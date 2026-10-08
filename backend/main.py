@@ -72,6 +72,26 @@ app.add_middleware(
 )
 
 
+from fastapi.responses import JSONResponse
+import traceback
+
+@app.exception_handler(HTTPException)
+async def http_exception_handler(request, exc):
+    return JSONResponse(
+        status_code=exc.status_code,
+        content={"status": "error", "message": exc.detail},
+    )
+
+@app.exception_handler(Exception)
+async def global_exception_handler(request, exc):
+    print(f"Unhandled Exception on {request.url}: {exc}")
+    traceback.print_exc()
+    return JSONResponse(
+        status_code=500,
+        content={"status": "error", "message": f"Server Error: {str(exc)}"},
+    )
+
+
 # ---------- Request/Response Models ----------
 
 class ChatRequest(BaseModel):
@@ -231,34 +251,75 @@ async def analyze_resume(file: UploadFile = File(...)):
     raw_text = extraction["raw_text"]
 
     # ---- Step 2: Preprocess ----
-    preprocessing = preprocess(raw_text)
+    try:
+        preprocessing = preprocess(raw_text)
+    except Exception as e:
+        print(f"Preprocess error: {e}")
+        preprocessing = {
+            "stages": {},
+            "clean_text": raw_text.lower(),
+            "tokens": raw_text.lower().split(),
+            "token_count": len(raw_text.split()),
+            "raw_text_preview": raw_text[:300]
+        }
 
     # ---- Step 3: Parse entities ----
-    entities = parse_entities(raw_text)
+    try:
+        entities = parse_entities(raw_text)
+    except Exception as e:
+        print(f"Entities parse error: {e}")
+        entities = {"name": None, "email": None, "phone": None, "location": None, "linkedin": None, "github": None}
 
     # ---- Step 4: Extract skills ----
-    skills = extract_skills(
-        preprocessing["clean_text"],
-        preprocessing["tokens"]
-    )
+    try:
+        skills = extract_skills(
+            preprocessing.get("clean_text", raw_text.lower()),
+            preprocessing.get("tokens", [])
+        )
+    except Exception as e:
+        print(f"Skills extract error: {e}")
+        skills = {
+            "matched_skills": [],
+            "ranked_skills": [],
+            "top_5_skills": [],
+            "skill_count": 0,
+            "by_category": {},
+            "match_details": {}
+        }
 
     # ---- Step 5: Classify job roles ----
-    job_roles = classify_job_roles(skills["matched_skills"])
+    try:
+        job_roles = classify_job_roles(skills.get("matched_skills", []))
+    except Exception as e:
+        print(f"Job roles error: {e}")
+        job_roles = {"top_roles": [], "best_match": None, "method": "Fallback"}
 
     # ---- Step 6: Skill gap analysis ----
-    gaps = analyze_gaps(
-        skills["matched_skills"],
-        job_roles["top_roles"]
-    )
+    try:
+        gaps = analyze_gaps(
+            skills.get("matched_skills", []),
+            job_roles.get("top_roles", [])
+        )
+    except Exception as e:
+        print(f"Gaps error: {e}")
+        gaps = {"gaps": {}, "method": "Fallback"}
 
     # ---- Step 7: Course recommendations ----
-    courses = recommend_courses(gaps["gaps"])
+    try:
+        courses = recommend_courses(gaps.get("gaps", {}))
+    except Exception as e:
+        print(f"Courses error: {e}")
+        courses = {"by_role": {}, "priority_skills": [], "total_unique_skills_to_learn": 0}
 
     # ---- Step 8: Job matching (auto-fetch for best role) ----
-    best_role = job_roles.get("best_match", {})
-    job_title = best_role.get("role", "Software Engineer") if best_role else "Software Engineer"
-    location = entities.get("location")
-    jobs = fetch_jobs(job_title, location)
+    try:
+        best_role = job_roles.get("best_match", {})
+        job_title = best_role.get("role", "Software Engineer") if best_role else "Software Engineer"
+        location = entities.get("location")
+        jobs = fetch_jobs(job_title, location)
+    except Exception as e:
+        print(f"Jobs fetch error: {e}")
+        jobs = {"jobs": [], "total_found": 0, "status": "mock"}
 
     # ---- Assemble full response ----
     return {

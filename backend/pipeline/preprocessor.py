@@ -29,16 +29,22 @@ from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 
-# Download required NLTK resources (safe to call multiple times)
-nltk.download('punkt', quiet=True)
-nltk.download('punkt_tab', quiet=True)
-nltk.download('stopwords', quiet=True)
-nltk.download('wordnet', quiet=True)
-nltk.download('averaged_perceptron_tagger', quiet=True)
+# Initialize NLTK resources safely
+for res in ('punkt', 'punkt_tab', 'stopwords', 'wordnet', 'averaged_perceptron_tagger'):
+    try:
+        nltk.data.find(f'tokenizers/{res}' if 'punkt' in res else f'corpora/{res}')
+    except LookupError:
+        nltk.download(res, quiet=True)
 
-# Initialize once at module level for performance
-lemmatizer = WordNetLemmatizer()
-STOP_WORDS = set(stopwords.words('english'))
+try:
+    lemmatizer = WordNetLemmatizer()
+except Exception:
+    lemmatizer = None
+
+try:
+    STOP_WORDS = set(stopwords.words('english'))
+except Exception:
+    STOP_WORDS = set()
 
 # Additional domain-specific stopwords to remove from resumes
 RESUME_STOPWORDS = {

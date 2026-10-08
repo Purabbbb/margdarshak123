@@ -28,7 +28,12 @@ def fetch_jobs(
     Fetches job listings from Adzuna sorted by relevance.
     The frontend handles date sorting client-side.
     """
-    if not ADZUNA_APP_ID or not ADZUNA_APP_KEY:
+    if (
+        not ADZUNA_APP_ID
+        or not ADZUNA_APP_KEY
+        or "your_adzuna" in ADZUNA_APP_ID.lower()
+        or len(ADZUNA_APP_ID.strip()) < 4
+    ):
         return _mock_jobs(job_title, location)
 
     params = {
@@ -37,14 +42,13 @@ def fetch_jobs(
         "results_per_page": min(int(results_per_page), 50),
         "what":             job_title,
         "content-type":     "application/json"
-        # No sort_by param — defaults to Adzuna relevance ranking
     }
 
     if location:
         params["where"] = location
 
     try:
-        response = requests.get(ADZUNA_BASE_URL, params=params, timeout=10)
+        response = requests.get(ADZUNA_BASE_URL, params=params, timeout=4)
         response.raise_for_status()
         data = response.json()
 
