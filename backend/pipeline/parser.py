@@ -21,15 +21,19 @@ Extracts structured fields from the resume using two techniques:
      which is common when resumes lack address formatting.
 """
 
-import re
-import spacy
+_nlp = None
 
-try:
-    nlp = spacy.load("en_core_web_sm")
-    SPACY_MODEL_READY = True
-except OSError:
-    nlp = spacy.blank("en")
-    SPACY_MODEL_READY = False
+def get_nlp():
+    global _nlp
+    if _nlp is None:
+        try:
+            _nlp = spacy.load("en_core_web_sm", disable=["parser", "tagger", "attribute_ruler", "lemmatizer"])
+        except Exception:
+            try:
+                _nlp = spacy.blank("en")
+            except Exception:
+                _nlp = False
+    return _nlp
 
 # ---------- Major city list for fallback location detection ----------
 KNOWN_CITIES = [
@@ -98,16 +102,21 @@ def extract_name_and_location(raw_text):
     Falls back to city keyword lookup for location if NER finds nothing.
     """
     top_section = raw_text[:600]
+    nlp = get_nlp()
 
     name = None
-    if SPACY_MODEL_READY:
-        doc_top = nlp(top_section)
-        for ent in doc_top.ents:
-            if ent.label_ == "PERSON":
-                parts = ent.text.strip().split()
-                if 2 <= len(parts) <= 4 and all(len(p) >= 2 for p in parts):
-                    name = ent.text.strip()
-                    break
+    if nlp:
+        try:
+            doc_top = nlp(top_section)
+            for ent in doc_top.ents:
+                if ent.label_ == "PERSON":
+                    parts = ent.text.strip().split()
+                    if 2 <= len(parts) <= 4 and all(len(p) >= 2 for p in parts):
+                        name = ent.text.strip()
+                        break
+        except Exception:
+            pass
+
     if not name:
         for line in [line.strip() for line in top_section.splitlines() if line.strip()]:
             if any(token in line.lower() for token in ("@", "http", "www", "+91")):
@@ -118,14 +127,17 @@ def extract_name_and_location(raw_text):
                 break
 
     location = None
-    if SPACY_MODEL_READY:
-        doc_full = nlp(raw_text[:2000])
-        for ent in doc_full.ents:
-            if ent.label_ in ("GPE", "LOC"):
-                text = ent.text.strip()
-                if len(text) >= 3:
-                    location = text
-                    break
+    if nlp:
+        try:
+            doc_full = nlp(raw_text[:2000])
+            for ent in doc_full.ents:
+                if ent.label_ in ("GPE", "LOC"):
+                    text = ent.text.strip()
+                    if len(text) >= 3:
+                        location = text
+                        break
+        except Exception:
+            pass
 
     # Fallback: keyword scan against known city list
     if not location:
