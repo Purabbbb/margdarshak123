@@ -81,6 +81,16 @@ class JobRequest(BaseModel):
 
 # ---------- Routes ----------
 
+@app.get("/")
+def root():
+    return {
+        "status": "online",
+        "service": "MargDarshak API",
+        "health_check": "/health",
+        "docs": "/docs"
+    }
+
+
 @app.get("/health")
 def health_check():
     return {"status": "ok", "service": "MargDarshak API"}
