@@ -155,7 +155,7 @@ def recommend_students_endpoint(teacher_id: str, top_skills: Optional[str] = Non
 
 
 @app.post("/resume/roast", response_model=RoastResponse)
-async def roast_resume_endpoint(
+def roast_resume_endpoint(
     file: UploadFile = File(...),
     target_role: str = Form("Software Engineer"),
     tone: str = Form("balanced"),
@@ -169,7 +169,7 @@ async def roast_resume_endpoint(
     if not file.filename.lower().endswith(".pdf"):
         raise HTTPException(status_code=400, detail="Only PDF files are supported for resume roasting.")
 
-    pdf_bytes = await file.read()
+    pdf_bytes = file.file.read()
     if len(pdf_bytes) == 0:
         raise HTTPException(status_code=400, detail="Uploaded resume file is empty.")
 
@@ -220,7 +220,7 @@ def improve_resume_endpoint(request: ImprovementRequest):
 
 
 @app.post("/analyze")
-async def analyze_resume(file: UploadFile = File(...)):
+def analyze_resume(file: UploadFile = File(...)):
     """
     Full resume analysis pipeline. PDF and image files share all stages after
     document-to-text extraction.
@@ -235,7 +235,7 @@ async def analyze_resume(file: UploadFile = File(...)):
             detail="Unsupported file type. Upload a PDF, JPG, JPEG, PNG, or WEBP resume.",
         )
 
-    file_bytes = await file.read()
+    file_bytes = file.file.read()
 
     if len(file_bytes) == 0:
         raise HTTPException(status_code=400, detail="Uploaded file is empty.")
