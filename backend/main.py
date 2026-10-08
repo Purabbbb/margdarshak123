@@ -56,10 +56,16 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# Allow requests from the React frontend (running on localhost:5173)
+# Allow requests from the React frontend (running on localhost or deployed on Render)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://localhost:3000", "*"],
+    allow_origins=[
+        "http://localhost:5173",
+        "http://localhost:3000",
+        "https://margdarshak123-1.onrender.com",
+        "https://margdarshak123.onrender.com",
+    ],
+    allow_origin_regex=r"https?://.*",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
