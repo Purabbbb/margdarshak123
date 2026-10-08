@@ -97,10 +97,11 @@ def stage_normalize_whitespace(text: str) -> str:
 def stage_tokenize(text: str) -> list:
     """
     Stage 5: Tokenize the cleaned text into individual word tokens.
-    Uses NLTK's word_tokenize which handles contractions and punctuation better
-    than a simple split().
     """
-    tokens = word_tokenize(text)
+    try:
+        tokens = word_tokenize(text)
+    except Exception:
+        tokens = re.findall(r'[a-z0-9\+\#\.\/\-]+', text)
     # Keep only tokens that are at least 2 characters (removes lone chars and noise)
     tokens = [t for t in tokens if len(t) >= 2]
     return tokens
@@ -116,7 +117,12 @@ def stage_lemmatize(tokens: list) -> list:
     Stage 7: Lemmatize tokens — reduce words to their base form.
     Examples: 'managing' -> 'manage', 'databases' -> 'database', 'running' -> 'run'
     """
-    return [lemmatizer.lemmatize(token) for token in tokens]
+    if lemmatizer:
+        try:
+            return [lemmatizer.lemmatize(token) for token in tokens]
+        except Exception:
+            pass
+    return tokens
 
 
 # ---------- Main Pipeline Function ----------

@@ -101,55 +101,26 @@ def extract_github(text):
 
 def extract_name_and_location(raw_text):
     """
-    Uses spaCy NER for name and location detection.
-    Falls back to city keyword lookup for location if NER finds nothing.
+    Pure Python name and location detection using fast regex and city dictionary lookup.
     """
     top_section = raw_text[:600]
-    nlp = get_nlp()
 
     name = None
-    if nlp:
-        try:
-            doc_top = nlp(top_section)
-            for ent in doc_top.ents:
-                if ent.label_ == "PERSON":
-                    parts = ent.text.strip().split()
-                    if 2 <= len(parts) <= 4 and all(len(p) >= 2 for p in parts):
-                        name = ent.text.strip()
-                        break
-        except Exception:
-            pass
-
-    if not name:
-        for line in [line.strip() for line in top_section.splitlines() if line.strip()]:
-            if any(token in line.lower() for token in ("@", "http", "www", "+91")):
-                continue
-            parts = line.split()
-            if 2 <= len(parts) <= 4 and all(part[:1].isupper() and part[1:].islower() for part in parts if part):
-                name = line
-                break
+    for line in [line.strip() for line in top_section.splitlines() if line.strip()]:
+        if any(token in line.lower() for token in ("@", "http", "www", "+91", "phone", "email", "resume", "curriculum", "github", "linkedin")):
+            continue
+        parts = re.findall(r'[A-Za-z]+', line)
+        if 2 <= len(parts) <= 4 and all(part[0].isupper() for part in parts if part):
+            name = " ".join(parts)
+            break
 
     location = None
-    if nlp:
-        try:
-            doc_full = nlp(raw_text[:2000])
-            for ent in doc_full.ents:
-                if ent.label_ in ("GPE", "LOC"):
-                    text = ent.text.strip()
-                    if len(text) >= 3:
-                        location = text
-                        break
-        except Exception:
-            pass
-
-    # Fallback: keyword scan against known city list
-    if not location:
-        text_lower = raw_text[:2000].lower()
-        for city in KNOWN_CITIES:
-            pattern = r'\b' + re.escape(city) + r'\b'
-            if re.search(pattern, text_lower):
-                location = city.title()
-                break
+    text_lower = raw_text[:2000].lower()
+    for city in KNOWN_CITIES:
+        pattern = r'\b' + re.escape(city) + r'\b'
+        if re.search(pattern, text_lower):
+            location = city.title()
+            break
 
     return {"name": name, "location": location}
 
